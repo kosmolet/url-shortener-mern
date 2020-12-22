@@ -17,7 +17,7 @@ const start = async () => {
     );
   } catch (err) {
     console.log("Server Error", err.message);
-    process.exit((code: 1));
+    process.exit(1);
   }
 };
 
