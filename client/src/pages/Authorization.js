@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHttp } from "../hooks/useHttp";
 import { useMessage } from "../hooks/useMessage";
+import AuthContext from "../store/AuthContext";
+import "./Authorization.css";
 
 const Authorization = () => {
+  const { login } = useContext(AuthContext);
   const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({
@@ -23,6 +26,12 @@ const Authorization = () => {
     try {
       const data = await request("/api/auth/register", "POST", { ...form });
       message(data.message);
+    } catch (err) {}
+  };
+  const handleLogin = async () => {
+    try {
+      const data = await request("/api/auth/login", "POST", { ...form });
+      login(data.token, data.userId);
     } catch (err) {}
   };
   return (
@@ -60,6 +69,7 @@ const Authorization = () => {
               <button
                 className="btn teal accent-3 black-text"
                 disabled={loading}
+                onClick={handleLogin}
               >
                 Login
               </button>

@@ -8,7 +8,6 @@ const User = require("../models/User");
 
 const router = Router();
 
-// /api/auth/register
 router.post(
   "/register",
   [
@@ -49,7 +48,6 @@ router.post(
   }
 );
 
-// /api/auth/login
 router.post(
   "/login",
   [
@@ -58,7 +56,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const error = validationResult(req);
+      const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -79,12 +77,11 @@ router.post(
           message: "User with this email address or password does not exist",
         });
       }
-
-      const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+      console.log(user);
+      const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
         expiresIn: "1h",
       });
-
-      res.status(201).json({ message: "User has been logged in" });
+      res.json({ token, userId: user._id });
     } catch (err) {
       res.status(500).json({
         message: "Something went wrong while login attempt",

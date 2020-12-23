@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateLink = () => {
   return (
-    <div>
+    <div className="row">
       <h1> CreateLink</h1>
     </div>
   );
