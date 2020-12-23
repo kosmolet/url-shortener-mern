@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../hooks/useHttp";
+import { useMessage } from "../hooks/useMessage";
 
 const Authorization = () => {
+  const message = useMessage();
+  const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleRegistration = async () => {
+    try {
+      const data = await request("/api/auth/register", "POST", { ...form });
+      message(data.message);
+    } catch (err) {}
   };
   return (
     <div className="authWr">
@@ -22,25 +38,36 @@ const Authorization = () => {
             </div>
             <div className="input-field ">
               <input
+                name="email"
                 id="email"
                 type="email"
                 className="form-input black-text"
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
               <label htmlFor="email">Email</label>
             </div>
             <div className="input-field">
               <input
+                name="password"
                 id="password"
                 type="password"
                 className="form-input black-text"
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
               <label htmlFor="password">Password</label>
             </div>
             <div className="card-action">
-              <button className="btn teal accent-3 black-text">Login</button>
-              <button className="btn grey lighten-2 black-text">
+              <button
+                className="btn teal accent-3 black-text"
+                disabled={loading}
+              >
+                Login
+              </button>
+              <button
+                className="btn grey lighten-2 black-text"
+                disabled={loading}
+                onClick={handleRegistration}
+              >
                 Register
               </button>
             </div>

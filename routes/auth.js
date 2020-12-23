@@ -13,13 +13,15 @@ router.post(
   "/register",
   [
     check("email", "Email should have correct format").isEmail(),
-    check("password", "Password legth should be more that 8 symbols").isLength({
-      min: 8,
-    }),
+    check("password", "Your password must contain at least 8 symbols").isLength(
+      {
+        min: 8,
+      }
+    ),
   ],
   async (req, res) => {
     try {
-      const error = validationResult(req);
+      const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
