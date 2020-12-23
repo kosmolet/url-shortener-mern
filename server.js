@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+app.use("/api/auth", require("./routes/auth.js"));
+
 const start = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
