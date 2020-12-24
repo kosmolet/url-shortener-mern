@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-const storageName = "userData";
+const storageName = "user";
 
 export const useAuth = () => {
   const [token, setToken] = useState(null);
@@ -17,16 +17,19 @@ export const useAuth = () => {
       })
     );
   }, []);
+
   const logout = useCallback((jwtToken, id) => {
     setToken(jwtToken);
     setUserId(id);
     localStorage.removeItem(storageName);
   }, []);
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
     if (data && data.token) {
       login(data.token, data.userId);
     }
   }, [login]);
+
   return { login, logout, token, userId };
 };

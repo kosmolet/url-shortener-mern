@@ -3,12 +3,9 @@ import Authorization from "./pages/Authorization";
 import CreateLink from "./pages/CreateLink";
 import LinkDetails from "./pages/LinkDetails";
 import Links from "./pages/Links";
-import { useAuth } from "./hooks/useAuth";
 
-const useRoutes = () => {
-  const { token } = useAuth();
-
-  if (!!token) {
+const Routes = (isAuthenticated) => {
+  if (isAuthenticated) {
     return (
       <Switch>
         <Route exact path="/links">
@@ -34,4 +31,4 @@ const useRoutes = () => {
   );
 };
 
-export default useRoutes;
+export default Routes;

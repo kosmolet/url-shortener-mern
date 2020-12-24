@@ -77,7 +77,6 @@ router.post(
           message: "User with this email address or password does not exist",
         });
       }
-      console.log(user);
       const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
         expiresIn: "1h",
       });
