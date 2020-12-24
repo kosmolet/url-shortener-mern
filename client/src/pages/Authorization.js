@@ -55,6 +55,7 @@ const Authorization = () => {
                 id="email"
                 type="email"
                 className="form-input black-text"
+                value={form.email}
                 onChange={handleChange}
               />
               <label htmlFor="email">Email</label>
@@ -65,6 +66,7 @@ const Authorization = () => {
                 id="password"
                 type="password"
                 className="form-input black-text"
+                value={form.password}
                 onChange={handleChange}
               />
               <label htmlFor="password">Password</label>
