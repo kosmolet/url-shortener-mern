@@ -16,7 +16,7 @@ router.post("/generate", auth, async (req, res) => {
       return res.json({ link: existingLink });
     }
 
-    const to = BASE_URL + "/t/" + code;
+    const to = BASE_URL + "/stn/" + code;
 
     const link = new Link({
       code,
