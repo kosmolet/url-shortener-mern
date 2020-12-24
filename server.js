@@ -9,7 +9,7 @@ app.use(express.json({ extended: true }));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/link", require("./routes/link"));
-app.use("/stn", require("./routes/link"));
+app.use("/stn", require("./routes/shortlink"));
 
 const start = async () => {
   try {
