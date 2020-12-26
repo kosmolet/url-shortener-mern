@@ -1,11 +1,19 @@
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
-const { PORT, MONGO_URI } = process.env;
+const { PORT, MONGO_URI, NODE_ENV } = process.env;
 const mongoose = require("mongoose");
 
 const app = express();
-
 app.use(express.json({ extended: true }));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+  });
+}
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/link", require("./routes/link"));
